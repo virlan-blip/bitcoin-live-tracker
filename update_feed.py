@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import re
 import feedparser
 from google import genai
 from datetime import datetime
@@ -35,19 +36,30 @@ def fetch_and_process():
     # Fetch the raw feeds
     for url in RSS_FEEDS:
         feed = feedparser.parse(url)
-        for entry in feed.entries[:3]:
+        
+        articles_added = 0
+        # We loop through the feed, but only stop once we find 3 *Bitcoin* articles
+        for entry in feed.entries:
+            if articles_added >= 3:
+                break
+                
+            # --- STRICT BITCOIN FILTER ---
+            # Combine title and summary to check for keywords
+            text_to_check = entry.title + " " + entry.get('summary', '')
+            
+            # Search for exact whole words: "Bitcoin" or "BTC" (case-insensitive)
+            # If neither word is found, skip this article immediately.
+            if not re.search(r'\b(bitcoin|btc)\b', text_to_check, re.IGNORECASE):
+                continue
+            # -----------------------------
+
             if entry.link not in existing_links:
-                
                 # --- GOOGLE NEWS BUG FIX ---
-                # Default to the general feed title
                 source_name = feed.feed.get('title', 'Industry Source')
-                
-                # If it's Google News, extract the actual publisher's name
                 if "news.google.com" in url:
                     if hasattr(entry, 'source') and hasattr(entry.source, 'title'):
                         source_name = entry.source.title
                     elif " - " in entry.title:
-                        # Fallback: Google News titles often end with " - Publisher Name"
                         source_name = entry.title.rsplit(" - ", 1)[-1]
                 # ---------------------------
 
@@ -58,14 +70,14 @@ def fetch_and_process():
                     'source': source_name,
                     'timestamp': datetime.utcnow().strftime('%I:%M %p UTC')
                 })
+                articles_added += 1
 
     if not new_items:
-        print("No new articles found. Exiting.")
+        print("No new Bitcoin articles found. Exiting.")
         return
 
     # Process new items through Gemini
     for item in new_items:
-        # We instruct the AI to focus on fundamental, evergreen analysis
         prompt = f"""
         You are a senior live-news editor for a premium financial platform (like BBC Live or Bloomberg). 
         Review this raw RSS feed item about Bitcoin:
@@ -101,7 +113,7 @@ def fetch_and_process():
             
             item['type'] = ai_data.get('type', 'News')
             item['headline'] = ai_data.get('headline', item['raw_title'])
-            item['content'] = ai_data.get('content', 'Detailed analysis available at the source link.')
+            item['content'] = ai_data.get('content', '<p>Detailed analysis available at the source link.</p>')
             
             data.insert(0, item)
             time.sleep(2)
