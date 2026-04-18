@@ -5,18 +5,21 @@ import feedparser
 from google import genai
 from datetime import datetime
 
-# 1. Setup Gemini API using the new modern SDK
+# Setup Gemini API using the new modern SDK
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key)
 
-# 2. Define the Data Sources
+# The absolute best industry sources for fundamental trading & institutional news
 RSS_FEEDS = [
     "https://news.google.com/rss/search?q=Bitcoin+trading+investing+when:1h&hl=en-US&gl=US&ceid=US:en",
+    "https://www.theblock.co/rss.xml",
+    "https://www.coindesk.com/arc/outboundfeeds/rss/",
+    "https://decrypt.co/feed",
+    "https://bitcoinmagazine.com/.rss/full/",
     "https://cointelegraph.com/rss/tag/bitcoin"
 ]
 
 def fetch_and_process():
-    # 3. Load existing data so we don't process the same news twice
     if os.path.exists('live_data.json'):
         with open('live_data.json', 'r') as f:
             try:
@@ -26,21 +29,33 @@ def fetch_and_process():
     else:
         data = []
 
-    # Get a list of links we already have
     existing_links = {item['link'] for item in data}
     new_items = []
 
-    # 4. Fetch the raw feeds
+    # Fetch the raw feeds
     for url in RSS_FEEDS:
         feed = feedparser.parse(url)
-        # Grab the top 3 newest items from each feed to keep API costs down
         for entry in feed.entries[:3]:
             if entry.link not in existing_links:
+                
+                # --- GOOGLE NEWS BUG FIX ---
+                # Default to the general feed title
+                source_name = feed.feed.get('title', 'Industry Source')
+                
+                # If it's Google News, extract the actual publisher's name
+                if "news.google.com" in url:
+                    if hasattr(entry, 'source') and hasattr(entry.source, 'title'):
+                        source_name = entry.source.title
+                    elif " - " in entry.title:
+                        # Fallback: Google News titles often end with " - Publisher Name"
+                        source_name = entry.title.rsplit(" - ", 1)[-1]
+                # ---------------------------
+
                 new_items.append({
                     'link': entry.link,
                     'raw_title': entry.title,
                     'raw_summary': entry.get('summary', ''),
-                    'source': feed.feed.get('title', 'News Source'),
+                    'source': source_name,
                     'timestamp': datetime.utcnow().strftime('%I:%M %p UTC')
                 })
 
@@ -48,52 +63,46 @@ def fetch_and_process():
         print("No new articles found. Exiting.")
         return
 
-    # 5. Process new items through Gemini
+    # Process new items through Gemini
     for item in new_items:
+        # We instruct the AI to focus on fundamental, evergreen analysis
         prompt = f"""
-        You are a live news editor for a financial website like the BBC or Reuters. 
-        Review this raw RSS news item about Bitcoin:
+        You are an expert financial analyst curating content for a professional platform. 
+        Review this raw RSS feed item about Bitcoin:
         Title: {item['raw_title']}
         Summary: {item['raw_summary']}
 
-        Write a concise, professional 2-3 sentence update for a live coverage feed. 
-        Determine if the news is a 'News' event or an 'Opinion/Analysis'.
+        Write a concise, 2-3 sentence professional summary. Prioritize extracting the fundamental analysis, evergreen insights, and in-depth article context over just reporting trending price movements. Highlight the insights of institutions, traders, and active industry companies.
         
-        Return ONLY a valid JSON object in exactly this format, nothing else (no markdown blocks):
-        {{"type": "News" or "Opinion", "headline": "A punchy, short headline", "content": "Your 2-3 sentence professional update."}}
+        Determine if the content is 'News' or 'Opinion'.
+        
+        Return ONLY a valid JSON object in exactly this format, nothing else:
+        {{"type": "News" or "Opinion", "headline": "An analytical, professional headline", "content": "Your 2-3 sentence analytical summary."}}
         """
         
         try:
-            print(f"Asking Gemini to edit: {item['raw_title']}")
+            print(f"Asking Gemini to analyze: {item['raw_title']}")
             
-            # Using the new SDK syntax and the current flash model
             response = client.models.generate_content(
                 model='gemini-2.5-flash',
                 contents=prompt
             )
             
-            # Clean up the response to ensure it's pure JSON
             res_text = response.text.replace('```json', '').replace('```', '').strip()
             ai_data = json.loads(res_text)
             
-            # Map the AI output to our item
             item['type'] = ai_data.get('type', 'News')
             item['headline'] = ai_data.get('headline', item['raw_title'])
-            item['content'] = ai_data.get('content', 'Update available. Click the link to read more.')
+            item['content'] = ai_data.get('content', 'Detailed analysis available at the source link.')
             
-            # Prepend the newest item to the top of our data list
             data.insert(0, item)
-            
-            # Sleep for 2 seconds to avoid hitting API rate limits
             time.sleep(2)
             
         except Exception as e:
             print(f"Error processing {item['link']} with Gemini: {e}")
             
-    # 6. Keep only the 30 most recent items so the file doesn't get infinitely large
     data = data[:30]
     
-    # 7. Save back to the JSON file
     with open('live_data.json', 'w') as f:
         json.dump(data, f, indent=2)
         print("Successfully updated live_data.json")
