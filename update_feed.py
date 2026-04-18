@@ -67,17 +67,25 @@ def fetch_and_process():
     for item in new_items:
         # We instruct the AI to focus on fundamental, evergreen analysis
         prompt = f"""
-        You are an expert financial analyst curating content for a professional platform. 
+        You are a senior live-news editor for a premium financial platform (like BBC Live or Bloomberg). 
         Review this raw RSS feed item about Bitcoin:
         Title: {item['raw_title']}
         Summary: {item['raw_summary']}
 
-        Write a concise, 2-3 sentence professional summary. Prioritize extracting the fundamental analysis, evergreen insights, and in-depth article context over just reporting trending price movements. Highlight the insights of institutions, traders, and active industry companies.
+        Your task is to write a comprehensive, detailed live-feed update. 
+        Instead of a short snippet, write a rich, self-contained update of about 3 to 4 distinct paragraphs. The reader should completely understand the topic without needing to click the source link. 
+        
+        Follow this BBC-style structure:
+        - Paragraph 1: The core breaking news or main argument (The hook).
+        - Paragraph 2: The deep context, background, or the "why" behind the news (e.g., macroeconomic factors, institutional behavior, geopolitical context).
+        - Paragraph 3/4: Quotes (if available in the summary), expert opinions, and the potential impact on the broader Bitcoin market.
+
+        CRITICAL INSTRUCTION: You must format the output using HTML paragraph tags inside the JSON content string to create visual spacing. Example: "<p>First paragraph text.</p><p>Second paragraph text.</p>"
         
         Determine if the content is 'News' or 'Opinion'.
         
-        Return ONLY a valid JSON object in exactly this format, nothing else:
-        {{"type": "News" or "Opinion", "headline": "An analytical, professional headline", "content": "Your 2-3 sentence analytical summary."}}
+        Return ONLY a valid JSON object in exactly this format, nothing else (no markdown formatting blocks):
+        {{"type": "News" or "Opinion", "headline": "A highly descriptive, professional headline", "content": "<p>First paragraph here.</p><p>Second paragraph here.</p><p>Third paragraph here.</p>"}}
         """
         
         try:
