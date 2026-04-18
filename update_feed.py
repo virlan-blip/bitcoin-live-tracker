@@ -2,15 +2,13 @@ import os
 import json
 import time
 import feedparser
-import google.generativeai as genai
+from google import genai
 from datetime import datetime
 
-# 1. Setup Gemini API using the Secret you added to GitHub
+# 1. Setup Gemini API using the new modern SDK
 api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=api_key)
+client = genai.Client(api_key=api_key)
 
-# Using the fast and cost-effective Flash model
-model = genai.GenerativeModel('gemini-1.5-flash-latest')
 # 2. Define the Data Sources
 RSS_FEEDS = [
     "https://news.google.com/rss/search?q=Bitcoin+trading+investing+when:1h&hl=en-US&gl=US&ceid=US:en",
@@ -43,7 +41,6 @@ def fetch_and_process():
                     'raw_title': entry.title,
                     'raw_summary': entry.get('summary', ''),
                     'source': feed.feed.get('title', 'News Source'),
-                    # We will stamp the exact time the script runs as the "live" time
                     'timestamp': datetime.utcnow().strftime('%I:%M %p UTC')
                 })
 
@@ -68,7 +65,12 @@ def fetch_and_process():
         
         try:
             print(f"Asking Gemini to edit: {item['raw_title']}")
-            response = model.generate_content(prompt)
+            
+            # Using the new SDK syntax and the current flash model
+            response = client.models.generate_content(
+                model='gemini-2.5-flash',
+                contents=prompt
+            )
             
             # Clean up the response to ensure it's pure JSON
             res_text = response.text.replace('```json', '').replace('```', '').strip()
