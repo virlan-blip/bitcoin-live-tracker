@@ -1,5 +1,65 @@
 [
   {
+    "link": "https://www.coindesk.com/markets/2026/04/18/bearish-bets-lose-usd593-million-as-bitcoin-jumps-with-iran-fully-opening-hormuz",
+    "raw_title": "Bitcoin falls back to $76,000 as Iran shuts Hormuz again",
+    "raw_summary": "",
+    "source": "CoinDesk: Bitcoin, Ethereum, Crypto News and Price Data",
+    "timestamp": "12:52 PM UTC",
+    "type": "News",
+    "headline": "Geopolitical Tensions Underline Bitcoin's Macro Sensitivity",
+    "content": "Bitcoin's price experienced a notable pullback to $76,000, attributed to renewed geopolitical tensions stemming from Iran's closure of the Strait of Hormuz. This event underscores the cryptocurrency market's increasing vulnerability and sensitivity to global macroeconomic and political instability, signaling a potential risk-off sentiment for digital assets."
+  },
+  {
+    "link": "https://www.coindesk.com/markets/2026/04/18/former-uk-prime-minister-sees-economy-on-very-negative-trajectory-indicates-support-for-bitcoin",
+    "raw_title": "Former UK Prime Minister sees economy on 'very negative trajectory,' indicates support for bitcoin",
+    "raw_summary": "",
+    "source": "CoinDesk: Bitcoin, Ethereum, Crypto News and Price Data",
+    "timestamp": "12:52 PM UTC",
+    "type": "News",
+    "headline": "Macroeconomic Headwinds Drive Former UK Prime Minister's Support for Bitcoin",
+    "content": "A former UK Prime Minister has expressed significant concern over a 'very negative trajectory' for the economy, concurrently signaling support for Bitcoin. This commentary from a prominent political figure highlights the growing institutional perception of decentralized assets as potential hedges against traditional economic instability, aligning Bitcoin with broader macro-economic narratives rather than mere speculative trends."
+  },
+  {
+    "link": "https://www.theblock.co/post/397961/rhea-finance-post-mortem-exploit-losses-18-4-million-double-initial-estimates?utm_source=rss&utm_medium=rss",
+    "raw_title": "Rhea Finance post-mortem puts exploit losses at $18.4 million, more than double initial estimates",
+    "raw_summary": "<p>Using what the team described as a \"deliberately constructed swap route,\" the attacker opened a large number of margin trading positions.</p>",
+    "source": "The Block",
+    "timestamp": "12:52 PM UTC",
+    "type": "News",
+    "headline": "Rhea Finance Post-Mortem Details Complex Margin Attack Leading to $18.4 Million Loss",
+    "content": "Rhea Finance's post-mortem report confirms an $18.4 million loss from a recent exploit, significantly exceeding initial estimates. The sophisticated attack utilized a 'deliberately constructed swap route' to manipulate margin trading positions, exposing complex vulnerabilities within decentralized finance protocols. This incident offers critical insights for institutions and traders regarding advanced attack vectors and persistent security challenges in the DeFi ecosystem."
+  },
+  {
+    "link": "https://www.theblock.co/post/397971/strategy-to-boost-preferred-stock-strcs-dividend-payments-to-semi-monthly?utm_source=rss&utm_medium=rss",
+    "raw_title": "Strategy looks to boost preferred stock STRC\u2019s dividend payments to semi-monthly",
+    "raw_summary": "<p>STRC is a perpetual preferred stock designed to trade near a $100 par value that currently pays a dividend at an annualized rate of 11.5%.</p>",
+    "source": "The Block",
+    "timestamp": "12:52 PM UTC",
+    "type": "News",
+    "headline": "STRC Perpetual Preferred Stock Targets Enhanced Dividend Frequency and Yield",
+    "content": "STRC is a perpetual preferred stock designed to trade near its $100 par value, currently offering a substantial 11.5% annualized dividend yield. A new strategic initiative aims to increase the frequency of these dividend payments to semi-monthly, potentially appealing to income-focused investors. This move underscores a focus on optimizing distribution schedules for this high-yield financial instrument."
+  },
+  {
+    "link": "https://www.theblock.co/post/397976/judge-says-caitlyn-jenners-jenner-memecoin-not-a-security-class-action-lawsuit?utm_source=rss&utm_medium=rss",
+    "raw_title": "Judge says Caitlyn Jenner\u2019s JENNER memecoin is not a security in class action lawsuit",
+    "raw_summary": "<p>A judge ruled that a memecoin launched by media personality Caitlyn Jenner is not a security despite claims in a class action lawsuit.\u00a0</p>",
+    "source": "The Block",
+    "timestamp": "12:52 PM UTC",
+    "type": "News",
+    "headline": "Judicial Ruling Classifies JENNER Memecoin as Non-Security, Informing Broader Digital Asset Debate",
+    "content": "A recent court decision ruled that Caitlyn Jenner's JENNER memecoin is not classified as a security, despite claims in a class-action lawsuit. This judgment offers a significant data point in the ongoing regulatory discussion surrounding the legal categorization of digital assets and memecoins, potentially influencing future interpretations within the evolving cryptocurrency market."
+  },
+  {
+    "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5iT1hTa09RQWxmX2ZUUEpIWlVGYjZiSHZwX2oyVDBTaXBKM1JDZ0lFdmZuM1lLbzRkdUdtMzE4N2pTanJod0Jva2EwMlBqWHQyb2JpUTVTX0VLaWdGTl96eUdpRDR4Zw?oc=5",
+    "raw_title": "GOLD Price to Czech Koruna | Convert GOLD to CZK - Binance",
+    "raw_summary": "<a href=\"https://news.google.com/rss/articles/CBMiZkFVX3lxTE5iT1hTa09RQWxmX2ZUUEpIWlVGYjZiSHZwX2oyVDBTaXBKM1JDZ0lFdmZuM1lLbzRkdUdtMzE4N2pTanJod0Jva2EwMlBqWHQyb2JpUTVTX0VLaWdGTl96eUdpRDR4Zw?oc=5\" target=\"_blank\">GOLD Price to Czech Koruna | Convert GOLD to CZK</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Binance</font>",
+    "source": "Binance",
+    "timestamp": "12:52 PM UTC",
+    "type": "News",
+    "headline": "Binance Provides Market Data for Gold Valued Against Czech Koruna",
+    "content": "This item highlights Binance's offering of real-time price conversion data for Gold (XAU) against the Czech Koruna (CZK). Such tools are crucial for investors and traders to monitor the value of precious metals in local fiat currencies, enabling informed decisions regarding portfolio diversification and international market exposure. It underscores the role of major exchanges like Binance in providing essential market infrastructure and data access for a diverse range of assets."
+  },
+  {
     "link": "https://cointelegraph.com/news/price-predictions-4-17-btc-eth-xrp-bnb-sol-doge-hype-ada-bch-link?utm_source=rss_feed&utm_medium=rss_tag_bitcoin&utm_campaign=rss_partner_inbound",
     "raw_title": "Price predictions 4/17: BTC, ETH, XRP, BNB, SOL, DOGE, HYPE, ADA, BCH, LINK",
     "raw_summary": "<p style=\"float: right; margin: 0 0 10px 15px; width: 240px;\"><img alt=\"Price predictions 4/17: BTC, ETH, XRP, BNB, SOL, DOGE, HYPE, ADA, BCH, LINK\" class=\"type:primaryImage\" src=\"https://images.cointelegraph.com/images/528_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjYtMDQvMDE5ZDljNTUtMmEyNC03MWI3LTkyYzQtZWM2NjU0MWE4NGYxLmpwZw==.jpg\" /></p><p>Bitcoin pole vaulted to $78,000 and altcoins soared after Iran said that the Strait of Hormuz was fully open. Will bulls be able to sustain the upward momentum?</p>",
