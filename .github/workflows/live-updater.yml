@@ -1,0 +1,42 @@
+name: Live News Auto-Updater
+
+on:
+  schedule:
+    # This cron expression means "run every 15 minutes"
+    - cron: '*/15 * * * *'
+  # This allows you to click a button in GitHub to run it manually if you want to test it
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run AI News Fetcher
+        env:
+          # This pulls the secret key you stored in your GitHub settings safely!
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python update_feed.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add live_data.json
+          # Only commit if there are actually changes to the file
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update live news feed"
+          git push
