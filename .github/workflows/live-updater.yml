@@ -2,8 +2,7 @@ name: Live News Auto-Updater
 
 on:
   schedule:
-    # Runs at the top of every hour
-    - cron: '0 * * * *'
+  - cron: '0 */3 * * *'  # Runs at 12:00, 3:00, 6:00, etc.
   # This allows you to click a button in GitHub to run it manually if you want to test it
   workflow_dispatch:
 
