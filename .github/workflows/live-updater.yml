@@ -2,8 +2,8 @@ name: Live News Auto-Updater
 
 on:
   schedule:
-    # This cron expression means "run every 15 minutes"
-    - cron: '*/15 * * * *'
+    # Runs at the top of every hour
+    - cron: '0 * * * *'
   # This allows you to click a button in GitHub to run it manually if you want to test it
   workflow_dispatch:
 
